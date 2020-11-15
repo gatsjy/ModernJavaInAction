@@ -45,7 +45,7 @@ public class StreamBasic {
         List<Dish> lowCaloricDishes = new ArrayList<>();
         for(Dish d : dishes){
             if(d.getCalories() < 400){
-                lowCaloricDishes.add(d);
+                //lowCaloricDishes.add(d);
             }
         }
         List<String> lowCaloricDishesName = new ArrayList<>();
