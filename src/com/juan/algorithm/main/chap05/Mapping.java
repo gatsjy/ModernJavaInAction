@@ -49,13 +49,5 @@ public class Mapping {
         pairs.forEach(pair -> System.out.printf("(%d %d)", pair[0], pair[1]));
 
         int[] numbers = {5,0,2,7};
-
-/*        Arrays.stream(numbers)
-                .flatMap((int i)->Arrays.stream(numbers)
-                        .map((int j) -> i+j))
-                .distinct()
-                .sorted()
-                .toArray();*/
-
     }
 }
