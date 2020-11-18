@@ -5,6 +5,7 @@ import com.juan.algorithm.main.chap04.Dish;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static com.juan.algorithm.main.chap04.Dish.menu;
 import static java.util.stream.Collectors.*;
@@ -45,6 +46,42 @@ public class Mapping {
 
         // 5.3.2 스트림 평면화
         // 만약 중복되지 않는 고유 문자로 나타내고 싶다면?
-        // 첫번째 케이스
+        // 우선 배열 스트림 대신 문자열 스트림이 필요하다. 다음 코드에서 보여주는 것처럼 문자열을 받아 스트림을 만드는 Arrays.stream() 메서드가 있다.
+
+        List<Stream<String>> collect = words.stream()
+                .map(word -> word.split("")) // 각 단어를 개별 문자열 배열로 변환
+                .map(Arrays::stream) // 각 배열을 별도의 스트림으로 생성
+                .distinct()
+                .collect(toList());
+        // 문제가 해결되지 않았다. 문제를 해결하려면 먼저 각 단어를 개별 문자열로 이루어진 배열로 만든 다음에 각 배열을 별도의 스트림으로 만들어야 한다.
+
+        List<String> uniqueCharacters = words.stream()
+                .map(word -> word.split(""))
+                .flatMap(Arrays::stream) // 생성된 스트림을 하나릐 스트림으로 평면화
+                .distinct()
+                .collect(toList());
+
+        System.out.println(uniqueCharacters);
+
+        List<Integer> numbers = Arrays.asList(1,2,3,4,5);
+        List<Integer> squares = numbers.stream().map(n -> n * n)
+                .collect(toList());
+
+        System.out.println(squares);
+
+        List<Integer> numbers1 = Arrays.asList(1,2,3);
+        List<Integer> numbers2 = Arrays.asList(3,4);
+        List<int[]> pairs = numbers1.stream()
+                .flatMap(i -> numbers2.stream()
+                .map(j-> new int[]{i,j})).collect(toList());
+
+        List<int[]> stream = numbers2.stream()
+                            .flatMap(i ->
+                                    numbers2.stream()
+                                            .filter(j -> (i + j) % 3 == 0)
+                                            .map(j -> new int[]{i * j}))
+                            .collect(toList());
+
+        pairs.forEach(System.out::println);
     }
 }
