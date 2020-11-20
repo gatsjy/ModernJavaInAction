@@ -20,13 +20,28 @@ import static com.juan.algorithm.main.chap04.Dish.menu;
  */
 public class NumericStreams {
     public static void main(String[] args) {
-        List<Integer> numbers = Arrays.asList(3,4,5,1,2);
-        Arrays.stream(numbers.toArray())
-            .forEach(System.out::println);
-
+        
+        // 5.7.1 기본형 특화 스트림
+        // 숫자 스트림으로 매핑
         int calories = menu.stream()
                 .mapToInt(Dish::getCalories)
                 .sum();
+
+        System.out.println(calories);
+
+        // 객체 스트림으로 복원하기
+        IntStream intStream = menu.stream().mapToInt(Dish::getCalories);
+        Stream<Integer> stream = intStream.boxed();
+
+        // 5.7.2 숫자 범위
+        IntStream evenNumbers = IntStream.rangeClosed(1, 100)
+                .filter(n -> n % 2 == 0);
+
+        System.out.println(evenNumbers.count());
+
+        List<Integer> numbers = Arrays.asList(3,4,5,1,2);
+        Arrays.stream(numbers.toArray())
+            .forEach(System.out::println);
 
         System.out.println(calories);
 
