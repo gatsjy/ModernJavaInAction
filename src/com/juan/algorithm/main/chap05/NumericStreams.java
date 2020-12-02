@@ -58,9 +58,6 @@ public class NumericStreams {
         }
         System.out.println(max);
 
-        // 숫자 범위
-        IntStream evenNumbers = IntStream.rangeClosed(1,100)
-                .filter(n -> n%2 == 0);
         System.out.println(evenNumbers.count());
 
         Stream<int[]> pythagoreanTriples = IntStream.rangeClosed(1,100).boxed()
